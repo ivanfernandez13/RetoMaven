@@ -1,0 +1,33 @@
+Iván Fernández Sánchez (ivanfernandez1304@gmail.com)
+----------------------------------------------------
+Reto:
+1. Generar el sitio web de Maven y comprobar que se genera toda la información del proyecto y los reports "Surefire" y "Cobertura".
+Antes de generar he limpiado la carpeta target con "mvn clean" y posteriormente he generado la web con "mvn site" correctamente.
+En cuanto a los reports, entiendo que son dos directorios, de los cuales sólo se me ha generado "surefire-reports", he intentado solucionarlo, lo explico en el apartado 4.
+
+
+2.Exponer concretamente las dependencias del proyecto en el sitio web generado. ¿Cuántas son? ¿De qué tipos?
+Tengo un recuento total de 71 dependencias, siendo las principales y requeridas para esta tarea:
+-org.springframework.boot (dependencia de compilación)
+-mysql, org.hsqldb (dependencias en tiempo de ejecución)
+-junit, org.springframework.boot (dependencias de prueba)
+
+
+3.Explicar la utilidad de cada cambio realizado en el pom.xml.
+-Se ha indicado un proyecto padre para poder heredar sus características "org.springframework.boot:spring-boot-starter-parent".
+-Se han incluido dependencias necesarias para compilar y ejecutar la aplicación,
+-Se han añadido plugins de build y de reporting, cuya diferencia es que los plugins de build se ejecutan durante la compilación y
+los de reporting se ejecutan durante la generación del sitio.
+
+
+4.Compruebe si hay errores en el log de ejecución al crear el sitio web e intenta diagnosticar los motivos.
+He localizado dos errores, uno siendo el que comentaba en el apartado 1 con respecto a generar los reports de cobertura, 
+"unable to locate test source xref to link to - disabled", lo he solucionado añadiendo un plugin dentro de la etiqueta reporting, 
+aun así no me genera el directorio "cobertura-reports", aunque ya no me da el mensaje en el log.
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>2.3</version>
+</plugin>
+El otro me generaba este error "unable to create maven project for org.jboss.narayana.jta:jms:pom:5.3.5.Final from repository",
+he probado a solucionarlo de varias formas pero aun así sigue dando error, incluso limpiando la carpeta target.
